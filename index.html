@@ -389,7 +389,7 @@
       >
         <span
           class="font-satoshi font-bold text-xl text-on-surface tracking-tight"
-          >Bahaa Medhat Wanas</span
+          >Bahaa Wanas</span
         >
         <div class="hidden md:flex items-center gap-8">
           <a href="#about" class="nav-link font-satoshi">About</a>
@@ -525,7 +525,7 @@
               class="bg-white border border-surface-container ghost-shadow rounded-2xl p-8 w-full max-w-sm"
             >
               <div class="flex flex-col items-center gap-2 mb-6">
-                <svg
+                <!-- <svg
                   width="80"
                   height="80"
                   viewBox="0 0 80 80"
@@ -539,19 +539,27 @@
                     stroke="#00bfa6"
                     stroke-width="3"
                   />
-                  <text
+                  <img
                     x="50%"
                     y="54%"
+                    src="./images/profile.jpeg"
                     text-anchor="middle"
                     dominant-baseline="middle"
                     fill="#006b5c"
                     font-family="Satoshi,sans-serif"
                     font-size="26"
                     font-weight="800"
-                  >
-                    BM
-                  </text>
-                </svg>
+                  />
+                </svg> -->
+                <div
+                  class="w-[7rem] h-[7rem] rounded-full overflow-hidden border-[3px] border-[#00bfa6]"
+                >
+                  <img
+                    src="./images/profile.jpeg"
+                    alt="Profile"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
                 <p class="font-satoshi font-bold text-lg text-on-surface">
                   Bahaa Medhat Wanas
                 </p>
@@ -2312,7 +2320,7 @@
         (function tick(now) {
           const t = Math.min((now - s) / dur, 1);
           const v = Math.round(ease(t) * target);
-          el.textContent = isLessThan && t >= 1 ? "<1+" : v + "+";
+          el.textContent = isLessThan && t >= 1 ? "<1" : v + "+";
           if (t < 1) requestAnimationFrame(tick);
         })(s);
       }
