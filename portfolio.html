@@ -1,0 +1,2480 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bahaa Medhat Wanas — Front-End Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#006b5c",
+              "primary-container": "#00bfa6",
+              "primary-light": "#e8f8f5",
+              surface: "#f9f9f9",
+              "surface-low": "#f3f3f4",
+              "surface-container": "#eeeeee",
+              "on-surface": "#1a1c1c",
+              "on-surface-variant": "#3c4a46",
+              "outline-variant": "#bbcac5",
+            },
+            fontFamily: {
+              satoshi: ["Satoshi", "Manrope", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #fff;
+        color: #1a1c1c;
+        margin: 0;
+      }
+      .gradient-primary {
+        background: linear-gradient(135deg, #006b5c 0%, #00bfa6 100%);
+      }
+      .ghost-shadow {
+        box-shadow: 0 8px 40px rgba(0, 191, 166, 0.08);
+      }
+      .section-padding {
+        padding-top: clamp(64px, 8vw, 120px);
+        padding-bottom: clamp(64px, 8vw, 120px);
+      }
+      .editorial-label {
+        color: #00bfa6;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-transform: uppercase;
+      }
+      .dot-pulse {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        animation: pulse-dot 2s infinite;
+        flex-shrink: 0;
+      }
+      @keyframes pulse-dot {
+        0% {
+          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+      }
+      .dev-icon {
+        width: 22px;
+        height: 22px;
+        filter: grayscale(1) opacity(0.6);
+        transition: filter 0.3s;
+        flex-shrink: 0;
+      }
+      .dev-icon:hover,
+      .skill-row:hover .dev-icon {
+        filter: grayscale(0) opacity(1);
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .cursor-blink {
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      .tag-pill {
+        background: #e8f8f5;
+        color: #007a69;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 10px;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      .timeline-line {
+        position: relative;
+        padding-left: 2rem;
+      }
+      .timeline-line::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 0;
+        width: 2px;
+        background: #eeeeee;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: -6px;
+        top: 6px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #006b5c;
+        border: 3px solid #fff;
+      }
+      .nav-link {
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        text-decoration: none;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        color: #00bfa6;
+      }
+      .nav-link.active {
+        font-weight: 700;
+        border-bottom: 2px solid #00bfa6;
+        padding-bottom: 2px;
+      }
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #00bfa6;
+        box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.15);
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      #rotator-word {
+        display: inline-block;
+        transition: opacity 0.3s ease;
+      }
+      .feature-card {
+        background: #f9f9f9;
+        border: 1px solid #eeeeee;
+        border-radius: 16px;
+        padding: 24px;
+        transition:
+          background 0.2s,
+          box-shadow 0.2s;
+      }
+      .feature-card:hover {
+        background: #fff;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      }
+      .skill-card {
+        transition: box-shadow 0.2s ease;
+      }
+      .skill-card:hover {
+        box-shadow: 0 8px 32px rgba(0, 191, 166, 0.1);
+      }
+      .social-btn {
+        width: 48px;
+        height: 48px;
+        border: 1px solid #eeeeee;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+        color: #64748b;
+        text-decoration: none;
+      }
+      .social-btn:hover {
+        color: #00bfa6;
+        border-color: #00bfa6;
+      }
+      .footer-link {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #94a3b8;
+        transition: color 0.2s;
+        text-decoration: none;
+      }
+      .footer-link:hover {
+        color: #00bfa6;
+      }
+      #mobile-menu {
+        display: none;
+      }
+      #mobile-menu.open {
+        display: block;
+      }
+      .stat-divider {
+        border-right: 1px solid #eeeeee;
+      }
+      @media (max-width: 768px) {
+        .stat-divider {
+          border-right: none;
+          border-bottom: 1px solid #eeeeee;
+        }
+      }
+
+      /* PROJECT CARDS */
+      .proj-card {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #eeeeee;
+        overflow: hidden;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .proj-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 56px rgba(0, 191, 166, 0.16);
+      }
+      .proj-img-wrap {
+        overflow: hidden;
+        height: 200px;
+        position: relative;
+        background: #e8f8f5;
+      }
+      .proj-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+      .proj-card:hover .proj-img-wrap img {
+        transform: scale(1.06);
+      }
+      .proj-img-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+      .proj-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+      }
+      .proj-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .proj-title {
+        font-family: "Satoshi", sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        color: #1a1c1c;
+      }
+      .proj-desc {
+        font-size: 0.875rem;
+        color: #64748b;
+        line-height: 1.65;
+        flex: 1;
+      }
+      .proj-links {
+        display: flex;
+        gap: 12px;
+        margin-top: 4px;
+      }
+      .proj-link-demo {
+        background: linear-gradient(135deg, #006b5c, #00bfa6);
+        color: #fff;
+        font-family: "Satoshi", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 8px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .proj-link-demo:hover {
+        opacity: 0.88;
+      }
+      .proj-link-gh {
+        border: 1px solid #00bfa6;
+        color: #006b5c;
+        font-family: "Satoshi", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 8px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .proj-link-gh:hover {
+        background: #e8f8f5;
+      }
+
+      /* WAVE BARS */
+      .wave-bar {
+        width: 4px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #006b5c, #00bfa6);
+        animation: wave 1s ease-in-out infinite alternate;
+      }
+      @keyframes wave {
+        0% {
+          transform: scaleY(0.4);
+        }
+        100% {
+          transform: scaleY(1);
+        }
+      }
+
+      /* SPARK BARS */
+      .spark-bar {
+        flex: 1;
+        background: linear-gradient(135deg, #006b5c, #00bfa6);
+        border-radius: 2px 2px 0 0;
+        opacity: 0.75;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100"
+    >
+      <div
+        class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between"
+      >
+        <span
+          class="font-satoshi font-bold text-xl text-on-surface tracking-tight"
+          >Bahaa Medhat Wanas</span
+        >
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#about" class="nav-link font-satoshi">About</a>
+          <a href="#projects" class="nav-link font-satoshi">Projects</a>
+          <a href="#experience" class="nav-link font-satoshi">Experience</a>
+          <a href="#skills" class="nav-link font-satoshi">Skills</a>
+          <a href="#contact" class="nav-link font-satoshi">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="#contact"
+            class="gradient-primary text-white font-satoshi font-bold text-sm px-5 py-2 rounded-lg hidden md:block hover:opacity-90 transition-opacity"
+            >Hire Me</a
+          >
+          <button
+            id="hamburger"
+            class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-surface-container"
+            aria-expanded="false"
+            aria-label="Menu"
+          >
+            <span class="material-symbols-outlined text-xl">menu</span>
+          </button>
+        </div>
+      </div>
+      <div
+        id="mobile-menu"
+        class="md:hidden bg-white border-b border-surface-container shadow-md"
+      >
+        <div class="flex flex-col py-3 px-6 gap-1">
+          <a href="#about" class="nav-link font-satoshi py-2 mobile-nav-link"
+            >About</a
+          >
+          <a href="#projects" class="nav-link font-satoshi py-2 mobile-nav-link"
+            >Projects</a
+          >
+          <a
+            href="#experience"
+            class="nav-link font-satoshi py-2 mobile-nav-link"
+            >Experience</a
+          >
+          <a href="#skills" class="nav-link font-satoshi py-2 mobile-nav-link"
+            >Skills</a
+          >
+          <a href="#contact" class="nav-link font-satoshi py-2 mobile-nav-link"
+            >Contact</a
+          >
+          <a
+            href="#contact"
+            class="gradient-primary text-white font-satoshi font-bold text-sm px-5 py-2.5 rounded-lg mt-2 text-center mobile-nav-link"
+            >Hire Me</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section
+      class="min-h-screen flex items-center bg-white overflow-hidden relative pt-16"
+    >
+      <div
+        class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-10 blur-[120px] pointer-events-none"
+        style="background: radial-gradient(circle, #00bfa6, transparent 70%)"
+      ></div>
+      <div class="max-w-[1200px] mx-auto px-6 py-20 w-full">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- Left -->
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-wrap items-center gap-4">
+              <span class="editorial-label">&#8212;&#8212; WELCOME</span>
+              <div
+                class="flex items-center gap-2 bg-primary-light rounded-full px-4 py-1.5"
+              >
+                <div class="dot-pulse"></div>
+                <span
+                  style="
+                    font-size: 10px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: #006b5c;
+                  "
+                  >Open to new opportunities</span
+                >
+              </div>
+            </div>
+            <h1
+              class="font-satoshi text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface leading-none"
+            >
+              Hi, I'm <span class="text-primary">Bahaa<br />Medhat Wanas</span>
+            </h1>
+            <p class="text-on-surface text-xl font-satoshi font-medium">
+              I build things for
+              <span id="rotator-word" class="text-primary font-bold"
+                >the Web</span
+              ><span class="cursor-blink text-primary">|</span>
+            </p>
+            <p class="text-slate-500 text-lg max-w-md leading-relaxed">
+              Front-End Developer specializing in React.js &amp; Next.js,
+              building responsive, performance-optimized UIs. Comfortable
+              working across the stack with Node.js, Express, and MongoDB.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a
+                href="https://github.com/BahaaMedhat11"
+                target="_blank"
+                rel="noopener"
+                class="gradient-primary text-white font-satoshi font-bold px-8 py-4 rounded-lg ghost-shadow hover:opacity-90 transition-opacity flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"
+                  />
+                </svg>
+                View GitHub
+              </a>
+              <a
+                href="#contact"
+                class="border-2 border-primary-container text-primary font-satoshi font-bold px-8 py-4 rounded-lg hover:bg-primary-light transition-colors"
+              >
+                Contact Me
+              </a>
+            </div>
+          </div>
+          <!-- Right card -->
+          <div class="hidden md:flex justify-center items-center">
+            <div
+              class="bg-white border border-surface-container ghost-shadow rounded-2xl p-8 w-full max-w-sm"
+            >
+              <div class="flex flex-col items-center gap-2 mb-6">
+                <svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 80 80"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="38"
+                    fill="#e8f8f5"
+                    stroke="#00bfa6"
+                    stroke-width="3"
+                  />
+                  <text
+                    x="50%"
+                    y="54%"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    fill="#006b5c"
+                    font-family="Satoshi,sans-serif"
+                    font-size="26"
+                    font-weight="800"
+                  >
+                    BM
+                  </text>
+                </svg>
+                <p class="font-satoshi font-bold text-lg text-on-surface">
+                  Bahaa Medhat Wanas
+                </p>
+                <p class="text-sm text-slate-500">
+                  Front-End Developer &middot; React &amp; Next.js
+                </p>
+                <p class="text-xs text-slate-400 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm"
+                    >location_on</span
+                  >New Cairo, Egypt
+                </p>
+              </div>
+              <div class="border-t border-surface-container mb-5"></div>
+              <p
+                class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3"
+              >
+                Core Stack
+              </p>
+              <div class="grid grid-cols-2 gap-3">
+                <div
+                  class="bg-surface-low border border-surface-container rounded-xl p-3 flex items-center gap-2"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                    alt="React"
+                    class="dev-icon"
+                  />
+                  <span class="text-xs font-semibold text-on-surface-variant"
+                    >React.js</span
+                  >
+                </div>
+                <div
+                  class="bg-surface-low border border-surface-container rounded-xl p-3 flex items-center gap-2"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                    alt="Next.js"
+                    class="dev-icon"
+                  />
+                  <span class="text-xs font-semibold text-on-surface-variant"
+                    >Next.js</span
+                  >
+                </div>
+                <div
+                  class="bg-surface-low border border-surface-container rounded-xl p-3 flex items-center gap-2"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                    alt="TypeScript"
+                    class="dev-icon"
+                  />
+                  <span class="text-xs font-semibold text-on-surface-variant"
+                    >TypeScript</span
+                  >
+                </div>
+                <div
+                  class="bg-surface-low border border-surface-container rounded-xl p-3 flex items-center gap-2"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js"
+                    class="dev-icon"
+                  />
+                  <span class="text-xs font-semibold text-on-surface-variant"
+                    >Node.js</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <div class="bg-surface-low border-y border-surface-container py-12">
+      <div class="max-w-[1100px] mx-auto px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3">
+          <div class="flex flex-col items-center py-6 md:py-0 stat-divider">
+            <span
+              id="stat-0"
+              class="font-satoshi font-extrabold text-4xl text-on-surface"
+              >0+</span
+            >
+            <span
+              class="text-xs uppercase tracking-widest text-slate-500 font-bold mt-1"
+              >Years Experience</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center py-6 md:py-0 stat-divider border-t md:border-t-0 border-surface-container"
+          >
+            <span
+              id="stat-1"
+              class="font-satoshi font-extrabold text-4xl text-on-surface"
+              >0+</span
+            >
+            <span
+              class="text-xs uppercase tracking-widest text-slate-500 font-bold mt-1"
+              >Projects Deployed</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center py-6 md:py-0 border-t md:border-t-0 border-surface-container"
+          >
+            <span
+              id="stat-2"
+              class="font-satoshi font-extrabold text-4xl text-on-surface"
+              >0+</span
+            >
+            <span
+              class="text-xs uppercase tracking-widest text-slate-500 font-bold mt-1"
+              >Technologies</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="bg-white section-padding">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-start">
+          <div class="reveal">
+            <span class="editorial-label mb-4 block"
+              >&#8212;&#8212; ABOUT ME</span
+            >
+            <h2
+              class="font-satoshi text-4xl font-extrabold tracking-tight text-on-surface mb-6 leading-tight"
+            >
+              Front-End Engineer.<br />Performance &amp; architecture first.
+            </h2>
+            <p class="text-slate-600 text-lg leading-relaxed mb-4">
+              Front-End Developer specializing in React.js and Next.js, with a
+              strong focus on responsive, performance-optimized UIs. Proficient
+              in TypeScript, Tailwind CSS, Redux Toolkit, React Query, and
+              modern React patterns including hooks, code splitting, and
+              memoization.
+            </p>
+            <p class="text-slate-600 text-lg leading-relaxed">
+              Comfortable working across the stack with Node.js, Express, and
+              MongoDB.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-4 reveal" data-delay="200">
+            <div class="feature-card">
+              <span
+                class="material-symbols-outlined text-primary text-3xl mb-3 block"
+                >speed</span
+              >
+              <h4 class="font-satoshi font-bold text-on-surface mb-1">
+                Performance First
+              </h4>
+              <p class="text-sm text-slate-500">
+                memo, useMemo, useCallback, lazy loading &mdash; built-in from
+                the start.
+              </p>
+            </div>
+            <div class="feature-card">
+              <span
+                class="material-symbols-outlined text-primary text-3xl mb-3 block"
+                >architecture</span
+              >
+              <h4 class="font-satoshi font-bold text-on-surface mb-1">
+                Clean Architecture
+              </h4>
+              <p class="text-sm text-slate-500">
+                Scalable component structure, feature-based folders, reusable
+                patterns.
+              </p>
+            </div>
+            <div class="feature-card">
+              <span
+                class="material-symbols-outlined text-primary text-3xl mb-3 block"
+                >layers</span
+              >
+              <h4 class="font-satoshi font-bold text-on-surface mb-1">
+                Full Stack Mindset
+              </h4>
+              <p class="text-sm text-slate-500">
+                Node.js, Express, MongoDB &mdash; comfortable from DB schema to
+                pixel-perfect UI.
+              </p>
+            </div>
+            <div class="feature-card">
+              <span
+                class="material-symbols-outlined text-primary text-3xl mb-3 block"
+                >groups</span
+              >
+              <h4 class="font-satoshi font-bold text-on-surface mb-1">
+                Team Player
+              </h4>
+              <p class="text-sm text-slate-500">
+                Git Flow, async collaboration, NTI soft-skills certified.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="bg-surface-low section-padding">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="mb-12 reveal">
+          <span class="editorial-label mb-3 block"
+            >&#8212;&#8212; PROJECTS</span
+          >
+          <h2
+            class="font-satoshi text-4xl font-extrabold tracking-tight text-on-surface mb-2"
+          >
+            Selected React Work
+          </h2>
+          <p class="text-slate-500 text-lg">
+            Real projects, all live on Vercel &amp; open-source on GitHub.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Card 1: Crypto Price Tracker -->
+          <div class="proj-card reveal ghost-shadow">
+            <div
+              class="proj-img-wrap"
+              style="background: linear-gradient(135deg, #0f172a, #1e293b)"
+            >
+              <img
+                src="./images/crypto.png"
+                alt="Crypto Price Tracker"
+                class="w-full h-full object-cover"
+              />
+              <div
+                style="
+                  padding: 16px;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #00bfa6;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    margin-bottom: 8px;
+                  "
+                >
+                  &#128202; Crypto Tracker
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr 60px;
+                      align-items: center;
+                      padding: 7px 8px;
+                      background: rgba(255, 255, 255, 0.06);
+                      border-radius: 6px;
+                      font-size: 9px;
+                      gap: 4px;
+                    "
+                  >
+                    <span style="color: #fff; font-weight: 700"
+                      >&#8383; BTC</span
+                    ><span style="color: #e2e8f0">$67,420</span
+                    ><span style="color: #4ade80; font-weight: 700">+2.3%</span>
+                    <div
+                      style="
+                        display: flex;
+                        align-items: flex-end;
+                        gap: 1px;
+                        height: 16px;
+                      "
+                    >
+                      <div class="spark-bar" style="height: 7px"></div>
+                      <div class="spark-bar" style="height: 11px"></div>
+                      <div class="spark-bar" style="height: 9px"></div>
+                      <div class="spark-bar" style="height: 14px"></div>
+                      <div class="spark-bar" style="height: 16px"></div>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr 60px;
+                      align-items: center;
+                      padding: 7px 8px;
+                      background: rgba(255, 255, 255, 0.04);
+                      border-radius: 6px;
+                      font-size: 9px;
+                      gap: 4px;
+                    "
+                  >
+                    <span style="color: #fff; font-weight: 700">&#926; ETH</span
+                    ><span style="color: #e2e8f0">$3,518</span
+                    ><span style="color: #4ade80; font-weight: 700">+1.7%</span>
+                    <div
+                      style="
+                        display: flex;
+                        align-items: flex-end;
+                        gap: 1px;
+                        height: 16px;
+                      "
+                    >
+                      <div class="spark-bar" style="height: 9px"></div>
+                      <div class="spark-bar" style="height: 7px"></div>
+                      <div class="spark-bar" style="height: 13px"></div>
+                      <div class="spark-bar" style="height: 10px"></div>
+                      <div class="spark-bar" style="height: 16px"></div>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr 60px;
+                      align-items: center;
+                      padding: 7px 8px;
+                      background: rgba(255, 255, 255, 0.06);
+                      border-radius: 6px;
+                      font-size: 9px;
+                      gap: 4px;
+                    "
+                  >
+                    <span style="color: #fff; font-weight: 700"
+                      >&#9728; SOL</span
+                    ><span style="color: #e2e8f0">$172</span
+                    ><span style="color: #f87171; font-weight: 700">-0.8%</span>
+                    <div
+                      style="
+                        display: flex;
+                        align-items: flex-end;
+                        gap: 1px;
+                        height: 16px;
+                      "
+                    >
+                      <div
+                        class="spark-bar"
+                        style="height: 16px; opacity: 0.3"
+                      ></div>
+                      <div
+                        class="spark-bar"
+                        style="height: 12px; opacity: 0.3"
+                      ></div>
+                      <div
+                        class="spark-bar"
+                        style="height: 8px; opacity: 0.3"
+                      ></div>
+                      <div
+                        class="spark-bar"
+                        style="height: 6px; opacity: 0.3"
+                      ></div>
+                      <div
+                        class="spark-bar"
+                        style="height: 4px; opacity: 0.3"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 8px">
+                  CoinGecko API &middot; 100+ coins &middot; Live prices
+                </div>
+              </div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">React Router DOM</span>
+                <span class="tag-pill">Recharts</span>
+                <span class="tag-pill">CoinGecko API</span>
+                <span class="tag-pill">JavaScript ES6+</span>
+                <span class="tag-pill">CSS3</span>
+              </div>
+              <h3 class="proj-title">Crypto Price Tracker</h3>
+              <p class="proj-desc">
+                Real-time cryptocurrency dashboard for 100+ coins via CoinGecko
+                API. Features live prices, 24h change tracking, interactive
+                7-day price charts with Recharts, market cap ranking, dynamic
+                search by name/symbol, multiple sorting options, and grid/list
+                view modes. Fully responsive across all screen sizes.
+              </p>
+              <div class="proj-links">
+                <a
+                  href="https://crypto-price-website-with-react-one.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-demo"
+                  >Live Demo &#8594;</a
+                >
+                <a
+                  href="https://github.com/BahaaMedhat11/Crypto-Price-Website-With-React"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-gh"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: World Wise -->
+          <div class="proj-card reveal ghost-shadow" data-delay="100">
+            <div
+              class="proj-img-wrap"
+              style="background: linear-gradient(135deg, #064e3b, #065f46)"
+            >
+              <img
+                src="./images/world.png"
+                alt="Crypto Price Tracker"
+                class="w-full h-full object-cover"
+              />
+              <div
+                style="
+                  padding: 16px;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #6ee7b7;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                  "
+                >
+                  &#127758; World Wise &mdash; Travel Tracker
+                </div>
+                <div
+                  style="
+                    position: relative;
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.07);
+                      border-radius: 10px;
+                      padding: 12px;
+                      width: 100%;
+                      margin-top: 10px;
+                    "
+                  >
+                    <div
+                      style="display: flex; flex-direction: column; gap: 5px"
+                    >
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.1);
+                          border-radius: 6px;
+                          padding: 6px 8px;
+                          display: flex;
+                          align-items: center;
+                          gap: 6px;
+                          font-size: 9px;
+                          color: #d1fae5;
+                        "
+                      >
+                        <span>&#127466;&#127468;</span
+                        ><span style="font-weight: 700">Egypt</span
+                        ><span style="margin-left: auto; color: #6ee7b7"
+                          >Cairo, Alexandria</span
+                        >
+                      </div>
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.1);
+                          border-radius: 6px;
+                          padding: 6px 8px;
+                          display: flex;
+                          align-items: center;
+                          gap: 6px;
+                          font-size: 9px;
+                          color: #d1fae5;
+                        "
+                      >
+                        <span>&#127465;&#127466;</span
+                        ><span style="font-weight: 700">Germany</span
+                        ><span style="margin-left: auto; color: #6ee7b7"
+                          >Berlin</span
+                        >
+                      </div>
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.1);
+                          border-radius: 6px;
+                          padding: 6px 8px;
+                          display: flex;
+                          align-items: center;
+                          gap: 6px;
+                          font-size: 9px;
+                          color: #d1fae5;
+                        "
+                      >
+                        <span>&#127471;&#127477;</span
+                        ><span style="font-weight: 700">Japan</span
+                        ><span style="margin-left: auto; color: #6ee7b7"
+                          >Tokyo</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size: 9px; color: #6ee7b7; margin-top: 8px">
+                  Context API &middot; useReducer &middot; Protected Routes
+                </div>
+              </div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">React Router DOM v6</span>
+                <span class="tag-pill">Context API</span>
+                <span class="tag-pill">useReducer</span>
+                <span class="tag-pill">JavaScript ES6+</span>
+                <span class="tag-pill">CSS</span>
+              </div>
+              <h3 class="proj-title">World Wise &mdash; Travel Tracker</h3>
+              <p class="proj-desc">
+                SPA for tracking visited cities and countries worldwide.
+                Features dynamic city details via URL params, nested routing
+                architecture, login authentication flow, protected routes, a
+                structured dashboard layout, global state with Context API +
+                useReducer, and a custom 404 page. Built with a scalable
+                component-based structure.
+              </p>
+              <div class="proj-links">
+                <a
+                  href="https://world-wise-react-app.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-demo"
+                  >Live Demo &#8594;</a
+                >
+                <a
+                  href="https://github.com/BahaaMedhat11/World-Wise-React-App"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-gh"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Music Player -->
+          <div class="proj-card reveal ghost-shadow" data-delay="200">
+            <div class="proj-img-wrap" style="background: #0f172a">
+              <img
+                src="./images/music.png"
+                alt="Crypto Price Tracker"
+                class="w-full h-full object-cover"
+              />
+              <div
+                style="
+                  padding: 16px;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #00bfa6;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                  "
+                >
+                  &#127925; Music Player
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 10px;
+                    padding: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                  "
+                >
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <div
+                      style="
+                        width: 34px;
+                        height: 34px;
+                        background: linear-gradient(135deg, #006b5c, #00bfa6);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                      "
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-size: 16px; color: #fff"
+                        >play_arrow</span
+                      >
+                    </div>
+                    <div>
+                      <p style="font-size: 9px; color: #fff; font-weight: 700">
+                        Now Playing
+                      </p>
+                      <p style="font-size: 8px; color: #94a3b8">
+                        Track 3 of 8 &middot; Howler.js
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: flex-end;
+                      gap: 2px;
+                      height: 24px;
+                    "
+                  >
+                    <div
+                      class="wave-bar"
+                      style="height: 10px; animation-delay: 0s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 20px; animation-delay: 0.1s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 24px; animation-delay: 0.2s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 14px; animation-delay: 0.3s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 22px; animation-delay: 0.15s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 8px; animation-delay: 0.05s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 24px; animation-delay: 0.25s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 18px; animation-delay: 0.1s"
+                    ></div>
+                    <div
+                      class="wave-bar"
+                      style="height: 12px; animation-delay: 0.2s"
+                    ></div>
+                  </div>
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.08);
+                      border-radius: 4px;
+                      height: 3px;
+                    "
+                  >
+                    <div
+                      style="
+                        background: linear-gradient(90deg, #006b5c, #00bfa6);
+                        height: 100%;
+                        border-radius: 4px;
+                        width: 42%;
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 8px">
+                  Play, Skip, Seek, Shuffle &middot; Custom Playlists &middot;
+                  LocalStorage
+                </div>
+              </div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">React Router</span>
+                <span class="tag-pill">Context API</span>
+                <span class="tag-pill">Howler.js</span>
+                <span class="tag-pill">JavaScript ES6+</span>
+                <span class="tag-pill">CSS3</span>
+              </div>
+              <h3 class="proj-title">Music Player &mdash; Browser Audio</h3>
+              <p class="proj-desc">
+                Full-featured browser music player with play/pause, next/prev,
+                seek, volume control, and shuffle. Create custom playlists, add
+                songs via dropdown, delete playlists, with persistence via
+                LocalStorage. Animated progress bar syncs in real-time with
+                Howler.js audio engine. Mobile-friendly responsive design.
+              </p>
+              <div class="proj-links">
+                <a
+                  href="https://music-player-with-react-psi.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-demo"
+                  >Live Demo &#8594;</a
+                >
+                <a
+                  href="https://github.com/BahaaMedhat11/Music-Player-with-React"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-gh"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: React Quiz -->
+          <div class="proj-card reveal ghost-shadow" data-delay="50">
+            <div
+              class="proj-img-wrap"
+              style="background: linear-gradient(135deg, #1e1b4b, #312e81)"
+            >
+              <img
+                src="./images/quiz.png"
+                alt="Crypto Price Tracker"
+                class="w-full h-full object-cover"
+              />
+              <div
+                style="
+                  padding: 16px;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #a5b4fc;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                  "
+                >
+                  &#129514; React Quiz
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.07);
+                    border-radius: 10px;
+                    padding: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 9px;
+                      color: #c7d2fe;
+                      margin-bottom: 8px;
+                      font-weight: 700;
+                    "
+                  >
+                    Question 3 of 15
+                  </div>
+                  <div
+                    style="
+                      font-size: 9px;
+                      color: #e0e7ff;
+                      margin-bottom: 10px;
+                      line-height: 1.5;
+                    "
+                  >
+                    Which hook is used for side effects in React?
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 4px">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.06);
+                        border-radius: 5px;
+                        padding: 5px 8px;
+                        font-size: 8px;
+                        color: #a5b4fc;
+                      "
+                    >
+                      useState
+                    </div>
+                    <div
+                      style="
+                        background: rgba(0, 191, 166, 0.25);
+                        border-radius: 5px;
+                        padding: 5px 8px;
+                        font-size: 8px;
+                        color: #6ee7b7;
+                        font-weight: 700;
+                      "
+                    >
+                      useEffect &#10003;
+                    </div>
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.06);
+                        border-radius: 5px;
+                        padding: 5px 8px;
+                        font-size: 8px;
+                        color: #a5b4fc;
+                      "
+                    >
+                      useContext
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 9px;
+                    color: #818cf8;
+                    margin-top: 8px;
+                  "
+                >
+                  <span>Score: 24 pts</span><span>&#9203; 23s left</span>
+                </div>
+              </div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">useReducer</span>
+                <span class="tag-pill">Context API</span>
+                <span class="tag-pill">JavaScript ES6+</span>
+                <span class="tag-pill">LocalStorage</span>
+              </div>
+              <h3 class="proj-title">React Quiz &mdash; Timed Engine</h3>
+              <p class="proj-desc">
+                Quiz engine driven by a useReducer state machine handling the
+                full question lifecycle, scoring, and high-score persistence via
+                localStorage. Per-question countdown timer, cumulative score
+                tracking, and a full restart flow &mdash; all without page
+                reload. Clean, scalable state architecture.
+              </p>
+              <div class="proj-links">
+                <a
+                  href="https://react-quiz-7ehe-7de9v3172-bahaamedhats-projects.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-demo"
+                  >Live Demo &#8594;</a
+                >
+                <a
+                  href="https://github.com/BahaaMedhat11/React-Quiz"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-gh"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: Memory Game -->
+          <div class="proj-card reveal ghost-shadow" data-delay="150">
+            <div
+              class="proj-img-wrap"
+              style="background: linear-gradient(135deg, #134e4a, #0f766e)"
+            >
+              <img
+                src="./images/memory.png"
+                alt="Crypto Price Tracker"
+                class="w-full h-full object-cover"
+              />
+              <div
+                style="
+                  padding: 16px;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #99f6e4;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                  "
+                >
+                  &#129504; Memory Card Game
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 6px;
+                    margin: 8px 0;
+                  "
+                >
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: linear-gradient(135deg, #006b5c, #00bfa6);
+                      border-radius: 6px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 16px;
+                    "
+                  >
+                    &#128150;
+                  </div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 6px;
+                      border: 1px solid rgba(255, 255, 255, 0.15);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: linear-gradient(135deg, #006b5c, #00bfa6);
+                      border-radius: 6px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 16px;
+                    "
+                  >
+                    &#127775;
+                  </div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 6px;
+                      border: 1px solid rgba(255, 255, 255, 0.15);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 6px;
+                      border: 1px solid rgba(255, 255, 255, 0.15);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: linear-gradient(135deg, #006b5c, #00bfa6);
+                      border-radius: 6px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 16px;
+                    "
+                  >
+                    &#127775;
+                  </div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 6px;
+                      border: 1px solid rgba(255, 255, 255, 0.15);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      aspect-ratio: 1;
+                      background: linear-gradient(135deg, #006b5c, #00bfa6);
+                      border-radius: 6px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 16px;
+                    "
+                  >
+                    &#128150;
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 9px;
+                    color: #99f6e4;
+                  "
+                >
+                  <span>Moves: 12</span><span>Best: 10 &#127942;</span>
+                </div>
+              </div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">useState</span>
+                <span class="tag-pill">JavaScript ES6+</span>
+                <span class="tag-pill">CSS3</span>
+              </div>
+              <h3 class="proj-title">Memory Card Game</h3>
+              <p class="proj-desc">
+                Interactive memory-matching game with dynamic card flipping,
+                shuffle logic, and win-state detection using React component
+                state. Tracks move counter, persists best-score, and includes a
+                full restart mechanism &mdash; all managed via useState with
+                zero external state libraries.
+              </p>
+              <div class="proj-links">
+                <a
+                  href="https://memory-card-game-phi-inky.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-demo"
+                  >Live Demo &#8594;</a
+                >
+                <a
+                  href="https://github.com/BahaaMedhat11/Memory-Card-Game"
+                  target="_blank"
+                  rel="noopener"
+                  class="proj-link-gh"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EXPERIENCE & EDUCATION ===== -->
+    <section id="experience" class="bg-white section-padding">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16">
+          <!-- Experience -->
+          <div>
+            <span class="editorial-label mb-8 block"
+              >&#8212;&#8212; EXPERIENCE</span
+            >
+            <div class="flex flex-col gap-10">
+              <!-- NTI -->
+              <div class="timeline-line reveal">
+                <div class="timeline-dot"></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 class="font-satoshi font-bold text-on-surface">
+                      Open-Source Dev Intern
+                    </h4>
+                    <span class="tag-pill">NTI &middot; Hire Ready</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-mono mb-3">
+                    Apr 2026 &ndash; Jul 2026
+                  </p>
+                  <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                    Intensive training track covering front-end development,
+                    back-end development, and DevOps fundamentals alongside
+                    professional soft-skills modules. Built multiple React.js
+                    and Next.js mini-projects including an e-commerce store and
+                    auth flows. Constructed back-end CRUD APIs with Node.js,
+                    Express, MongoDB, and SQL Server. and AWS. Collaborated on a
+                    team car rental platform integrating front-end and back-end.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="tag-pill">React.js</span>
+                    <span class="tag-pill">Next.js</span>
+                    <span class="tag-pill">TypeScript</span>
+                    <span class="tag-pill">Tailwind CSS</span>
+                    <span class="tag-pill">Bootstrap</span>
+                    <span class="tag-pill">JavaScript ES6+</span>
+                    <span class="tag-pill">Node.js</span>
+                    <span class="tag-pill">Git &amp; GitHub</span>
+                    <span class="tag-pill">Git Flow</span>
+                    <!-- <span class="tag-pill">Docker</span> -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Alexandria Intelligence Office -->
+              <div class="timeline-line reveal" data-delay="150">
+                <div class="timeline-dot"></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 class="font-satoshi font-bold text-on-surface">
+                      Full-Stack Developer
+                    </h4>
+                    <span class="tag-pill">Alexandria Intelligence Office</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-mono mb-3">
+                    Jun 2025 &ndash; Mar 2026
+                  </p>
+                  <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                    Designed and developed responsive, intuitive user interfaces
+                    for a large-scale personnel management system (soldiers' and
+                    warrant officers' data). Built interactive views for CRUD
+                    operations across departments, roles, and service records.
+                    Refactored and enhanced two existing internal systems,
+                    resolving bugs and boosting performance. Coordinated with a
+                    Laravel/MVC back end to deliver fully integrated features.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="tag-pill">HTML5</span>
+                    <span class="tag-pill">CSS3</span>
+                    <span class="tag-pill">Bootstrap</span>
+                    <span class="tag-pill">JavaScript ES6+</span>
+                    <span class="tag-pill">React.js</span>
+                    <span class="tag-pill">Laravel</span>
+                    <span class="tag-pill">PHP</span>
+                    <span class="tag-pill">MySQL</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RemoteTasks -->
+              <div class="timeline-line reveal" data-delay="300">
+                <div class="timeline-dot"></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 class="font-satoshi font-bold text-on-surface">
+                      Freelance AI Model Reviewer
+                    </h4>
+                    <span class="tag-pill">RemoteTasks</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-mono mb-3">
+                    Sep 2023 &ndash; May 2024
+                  </p>
+                  <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                    Annotated and validated datasets to support ML model
+                    training accuracy. Assessed AI-generated outputs and code
+                    samples for technical correctness and reliability. Delivered
+                    structured feedback driving measurable gains in model output
+                    quality.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="tag-pill">Data Annotation</span>
+                    <span class="tag-pill">AI Evaluation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div>
+            <span class="editorial-label mb-8 block"
+              >&#8212;&#8212; EDUCATION</span
+            >
+            <div class="flex flex-col gap-10">
+              <div class="timeline-line reveal" data-delay="100">
+                <div class="timeline-dot"></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 class="font-satoshi font-bold text-on-surface">
+                      B.Sc. Artificial Intelligence
+                    </h4>
+                    <span class="tag-pill">Kafr El-Sheikh University</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-mono mb-3">
+                    Aug 2021 &ndash; Jun 2024
+                  </p>
+                  <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                    Graduated 2024 with grade
+                    <strong>Very Good &mdash; GPA 3.16 / 4.0</strong>. Core
+                    studies in machine learning, algorithms, data structures,
+                    and software engineering principles applied across real
+                    coursework and personal projects.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="tag-pill">AI / ML</span>
+                    <span class="tag-pill">Algorithms</span>
+                    <span class="tag-pill">Data Structures</span>
+                    <span class="tag-pill">Software Engineering</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="bg-surface-low section-padding">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="mb-12 reveal">
+          <span class="editorial-label mb-3 block"
+            >&#8212;&#8212; SKILLS &amp; EXPERTISE</span
+          >
+          <h2
+            class="font-satoshi text-4xl font-extrabold tracking-tight text-on-surface"
+          >
+            What I work with
+          </h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div
+            class="skill-card bg-white rounded-2xl border border-surface-container p-8 reveal"
+          >
+            <h3
+              class="font-satoshi font-bold text-on-surface pb-3 border-b border-surface-container mb-4"
+            >
+              Front-End
+            </h3>
+            <div class="flex flex-col gap-3">
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="React"
+                  class="dev-icon"
+                />React.js
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                  alt="Next.js"
+                  class="dev-icon"
+                />Next.js
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                  alt="TypeScript"
+                  class="dev-icon"
+                />TypeScript
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                  alt="JavaScript"
+                  class="dev-icon"
+                />JavaScript ES6+
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                  alt="Tailwind"
+                  class="dev-icon"
+                />Tailwind CSS
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+                  alt="Bootstrap"
+                  class="dev-icon"
+                />Bootstrap
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="skill-card bg-white rounded-2xl border border-surface-container p-8 reveal"
+            data-delay="100"
+          >
+            <h3
+              class="font-satoshi font-bold text-on-surface pb-3 border-b border-surface-container mb-4"
+            >
+              React Ecosystem
+            </h3>
+            <div class="flex flex-col gap-3">
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg"
+                  alt="Redux"
+                  class="dev-icon"
+                />Redux Toolkit
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="React Query"
+                  class="dev-icon"
+                />React Query
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="Context API"
+                  class="dev-icon"
+                />Context API
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="Hooks"
+                  class="dev-icon"
+                />Hooks &amp; Optimization
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="Router"
+                  class="dev-icon"
+                />React Router DOM
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="skill-card bg-white rounded-2xl border border-surface-container p-8 reveal"
+            data-delay="200"
+          >
+            <h3
+              class="font-satoshi font-bold text-on-surface pb-3 border-b border-surface-container mb-4"
+            >
+              Back-End
+            </h3>
+            <div class="flex flex-col gap-3">
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                  alt="Node.js"
+                  class="dev-icon"
+                />Node.js
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                  alt="Express"
+                  class="dev-icon"
+                />Express.js
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                  alt="MongoDB"
+                  class="dev-icon"
+                />MongoDB
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+                  alt="PHP"
+                  class="dev-icon"
+                />PHP &amp; Laravel
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                  alt="MySQL"
+                  class="dev-icon"
+                />MySQL
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="skill-card bg-white rounded-2xl border border-surface-container p-8 reveal"
+            data-delay="300"
+          >
+            <h3
+              class="font-satoshi font-bold text-on-surface pb-3 border-b border-surface-container mb-4"
+            >
+              Tools
+            </h3>
+            <div class="flex flex-col gap-3">
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                  alt="Git"
+                  class="dev-icon"
+                />Git &amp; Git Flow
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                  alt="GitHub"
+                  class="dev-icon"
+                />GitHub
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <!-- <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                  alt="Docker"
+                  class="dev-icon"
+                />Docker -->
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg"
+                  alt="Postman"
+                  class="dev-icon"
+                />Postman
+              </div>
+              <div
+                class="skill-row flex items-center gap-3 text-sm font-medium text-on-surface-variant"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg"
+                  alt="npm"
+                  class="dev-icon"
+                />npm
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="bg-white section-padding">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-start">
+          <div class="reveal">
+            <span class="editorial-label mb-4 block"
+              >&#8212;&#8212; GET IN TOUCH</span
+            >
+            <h2
+              class="font-satoshi text-4xl md:text-5xl font-extrabold tracking-tight text-on-surface mb-8 leading-tight"
+            >
+              Let's build something<br />great together.
+            </h2>
+            <div class="flex flex-col gap-5 mb-8">
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary text-xl"
+                    >location_on</span
+                  >
+                </div>
+                <div>
+                  <p
+                    class="text-xs text-slate-400 font-bold uppercase tracking-widest"
+                  >
+                    Location
+                  </p>
+                  <p class="text-sm font-medium text-on-surface">
+                    5th Settlement, New Cairo, Egypt
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary text-xl"
+                    >call</span
+                  >
+                </div>
+                <div>
+                  <p
+                    class="text-xs text-slate-400 font-bold uppercase tracking-widest"
+                  >
+                    Phone
+                  </p>
+                  <a
+                    href="tel:+201287428907"
+                    class="text-sm font-medium text-on-surface hover:text-primary transition-colors"
+                    >+20 128 742 8907</a
+                  >
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary text-xl"
+                    >mail</span
+                  >
+                </div>
+                <div>
+                  <p
+                    class="text-xs text-slate-400 font-bold uppercase tracking-widest"
+                  >
+                    Email
+                  </p>
+                  <a
+                    href="mailto:bahaawanas85@gmail.com"
+                    class="text-sm font-medium text-on-surface hover:text-primary transition-colors"
+                    >bahaawanas85@gmail.com</a
+                  >
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary text-xl"
+                    >schedule</span
+                  >
+                </div>
+                <div>
+                  <p
+                    class="text-xs text-slate-400 font-bold uppercase tracking-widest"
+                  >
+                    Response Time
+                  </p>
+                  <p class="text-sm font-medium text-on-surface">
+                    Usually within 24 hours
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Social icons: GitHub, LinkedIn, Gmail only -->
+            <div class="flex gap-3">
+              <a
+                href="https://github.com/BahaaMedhat11"
+                target="_blank"
+                rel="noopener"
+                class="social-btn"
+                aria-label="GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/bahaa-wanas-9797b923a/"
+                target="_blank"
+                rel="noopener"
+                class="social-btn"
+                aria-label="LinkedIn"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="mailto:bahaawanas85@gmail.com"
+                class="social-btn"
+                aria-label="Gmail"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form — sends email via FormSubmit.co (no backend needed) -->
+          <div
+            class="bg-surface-low rounded-2xl border border-surface-container p-8 md:p-10 reveal"
+            data-delay="150"
+          >
+            <div id="form-area">
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 block"
+                    >Name</label
+                  >
+                  <input
+                    id="f-name"
+                    type="text"
+                    placeholder="Your name"
+                    class="bg-white border border-surface-container rounded-lg p-3 text-sm w-full text-on-surface placeholder-slate-400"
+                  />
+                  <p id="err-name" class="text-red-500 text-xs mt-1 hidden">
+                    Name is required.
+                  </p>
+                </div>
+                <div>
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 block"
+                    >Email</label
+                  >
+                  <input
+                    id="f-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    class="bg-white border border-surface-container rounded-lg p-3 text-sm w-full text-on-surface placeholder-slate-400"
+                  />
+                  <p id="err-email" class="text-red-500 text-xs mt-1 hidden">
+                    Valid email required.
+                  </p>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label
+                  class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 block"
+                  >Subject</label
+                >
+                <input
+                  id="f-subject"
+                  type="text"
+                  placeholder="Project inquiry..."
+                  class="bg-white border border-surface-container rounded-lg p-3 text-sm w-full text-on-surface placeholder-slate-400"
+                />
+                <p id="err-subject" class="text-red-500 text-xs mt-1 hidden">
+                  Subject is required.
+                </p>
+              </div>
+              <div class="mb-6">
+                <label
+                  class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 block"
+                  >Message</label
+                >
+                <textarea
+                  id="f-message"
+                  rows="5"
+                  placeholder="Tell me about your project..."
+                  class="bg-white border border-surface-container rounded-lg p-3 text-sm w-full text-on-surface placeholder-slate-400 resize-none"
+                ></textarea>
+                <p id="err-message" class="text-red-500 text-xs mt-1 hidden">
+                  Message is required.
+                </p>
+              </div>
+              <button
+                id="submit-btn"
+                onclick="handleFormSubmit()"
+                class="gradient-primary text-white w-full py-4 rounded-lg font-satoshi font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity cursor-pointer border-0"
+              >
+                <span class="material-symbols-outlined text-xl">send</span>Send
+                Message
+              </button>
+              <p id="form-status" class="text-center text-xs mt-3 hidden"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-surface py-12 border-t border-slate-100">
+      <div class="flex flex-col items-center gap-6">
+        <p
+          class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400 text-center px-4"
+        >
+          &copy; 2026 Bahaa Medhat Wanas &middot; Front-End Developer &middot;
+          New Cairo, Egypt
+        </p>
+        <div class="flex gap-8 md:gap-12">
+          <a
+            href="https://github.com/BahaaMedhat11"
+            target="_blank"
+            rel="noopener"
+            class="footer-link"
+            >GitHub</a
+          >
+          <a
+            href="https://www.linkedin.com/in/bahaa-wanas-9797b923a/"
+            target="_blank"
+            rel="noopener"
+            class="footer-link"
+            >LinkedIn</a
+          >
+          <a href="mailto:bahaawanas85@gmail.com" class="footer-link">Email</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // 1. ROTATOR
+      const words = ["the Web", "React.js", "Next.js", "TypeScript", "Node.js"];
+      let wi = 0;
+      const rEl = document.getElementById("rotator-word");
+      function rotateWord() {
+        rEl.style.opacity = "0";
+        setTimeout(() => {
+          wi = (wi + 1) % words.length;
+          rEl.textContent = words[wi];
+          rEl.style.opacity = "1";
+        }, 300);
+      }
+      setInterval(rotateWord, 2200);
+
+      // 2. SCROLL SPY
+      const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+      const sections = document.querySelectorAll("section[id]");
+      const spyObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const id = e.target.id;
+              navLinks.forEach((l) => {
+                l.classList.remove("active");
+                if (l.getAttribute("href") === "#" + id)
+                  l.classList.add("active");
+              });
+            }
+          });
+        },
+        { threshold: 0.4 },
+      );
+      sections.forEach((s) => spyObs.observe(s));
+
+      // 3. COUNTERS  — less than 1yr = show "<1", projects=5, tech=12
+      const statTargets = [1, 5, 12];
+      const statEls = [
+        document.getElementById("stat-0"),
+        document.getElementById("stat-1"),
+        document.getElementById("stat-2"),
+      ];
+      const ease = (t) => 1 - Math.pow(1 - t, 3);
+      function animateCounter(el, target, dur, isLessThan) {
+        const s = performance.now();
+        (function tick(now) {
+          const t = Math.min((now - s) / dur, 1);
+          const v = Math.round(ease(t) * target);
+          el.textContent = isLessThan && t >= 1 ? "<1+" : v + "+";
+          if (t < 1) requestAnimationFrame(tick);
+        })(s);
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        animateCounter(statEls[0], 1, 1800, true);
+        animateCounter(statEls[1], 5, 1800, false);
+        animateCounter(statEls[2], 12, 1800, false);
+      });
+
+      // 4. SCROLL REVEAL
+      const reveals = document.querySelectorAll(".reveal");
+      const ro = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              setTimeout(
+                () => e.target.classList.add("visible"),
+                parseInt(e.target.dataset.delay || 0),
+              );
+              ro.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      reveals.forEach((el) => ro.observe(el));
+
+      // 5. MOBILE NAV
+      const hbg = document.getElementById("hamburger");
+      const mm = document.getElementById("mobile-menu");
+      hbg.addEventListener("click", () => {
+        const open = mm.classList.toggle("open");
+        hbg.setAttribute("aria-expanded", String(open));
+        hbg.querySelector("span").textContent = open ? "close" : "menu";
+      });
+      document.querySelectorAll(".mobile-nav-link").forEach((l) =>
+        l.addEventListener("click", () => {
+          mm.classList.remove("open");
+          hbg.setAttribute("aria-expanded", "false");
+          hbg.querySelector("span").textContent = "menu";
+        }),
+      );
+
+      // 6. CONTACT FORM — sends to bahaawanas85@gmail.com via FormSubmit
+      async function handleFormSubmit() {
+        const name = document.getElementById("f-name");
+        const email = document.getElementById("f-email");
+        const subject = document.getElementById("f-subject");
+        const message = document.getElementById("f-message");
+        const btn = document.getElementById("submit-btn");
+        const status = document.getElementById("form-status");
+        const en = document.getElementById("err-name"),
+          ee = document.getElementById("err-email"),
+          es = document.getElementById("err-subject"),
+          em = document.getElementById("err-message");
+        [en, ee, es, em].forEach((x) => x.classList.add("hidden"));
+        [name, email, subject, message].forEach(
+          (x) => (x.style.borderColor = ""),
+        );
+        let ok = true;
+        if (!name.value.trim()) {
+          en.classList.remove("hidden");
+          name.style.borderColor = "#ef4444";
+          ok = false;
+        }
+        if (!email.value.trim() || !email.value.includes("@")) {
+          ee.classList.remove("hidden");
+          email.style.borderColor = "#ef4444";
+          ok = false;
+        }
+        if (!subject.value.trim()) {
+          es.classList.remove("hidden");
+          subject.style.borderColor = "#ef4444";
+          ok = false;
+        }
+        if (!message.value.trim()) {
+          em.classList.remove("hidden");
+          message.style.borderColor = "#ef4444";
+          ok = false;
+        }
+        if (!ok) return;
+
+        btn.disabled = true;
+        btn.innerHTML =
+          '<span class="material-symbols-outlined text-xl" style="animation:spin .8s linear infinite">progress_activity</span> Sending...';
+        status.classList.add("hidden");
+
+        try {
+          const res = await fetch(
+            "https://formsubmit.co/ajax/bahaawanas85@gmail.com",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                name: name.value.trim(),
+                email: email.value.trim(),
+                subject: subject.value.trim(),
+                message: message.value.trim(),
+                _subject: "Portfolio Contact: " + subject.value.trim(),
+                _captcha: "false",
+              }),
+            },
+          );
+          const data = await res.json();
+          if (data.success === "true" || data.success === true) {
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-xl">check_circle</span> Message Sent!';
+            btn.style.background = "#10b981";
+            status.textContent =
+              "Your message was delivered to Bahaa. Expect a reply within 24h.";
+            status.className = "text-center text-xs mt-3 text-green-600";
+            status.classList.remove("hidden");
+            setTimeout(() => {
+              [name, email, subject, message].forEach((x) => (x.value = ""));
+              btn.innerHTML =
+                '<span class="material-symbols-outlined text-xl">send</span> Send Message';
+              btn.style.background = "";
+              btn.disabled = false;
+              status.classList.add("hidden");
+            }, 4000);
+          } else {
+            throw new Error("failed");
+          }
+        } catch (e) {
+          btn.innerHTML =
+            '<span class="material-symbols-outlined text-xl">send</span> Send Message';
+          btn.style.background = "";
+          btn.disabled = false;
+          status.textContent =
+            "Could not send. Please email directly: bahaawanas85@gmail.com";
+          status.className = "text-center text-xs mt-3 text-red-500";
+          status.classList.remove("hidden");
+        }
+      }
+
+      // 7. DEVICON FALLBACK
+      function fb(alt) {
+        const i = (alt || "XX").slice(0, 2).toUpperCase();
+        return (
+          "data:image/svg+xml;charset=utf-8," +
+          encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="11" cy="11" r="11" fill="#e8f8f5"/><text x="11" y="15" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700" fill="#006b5c">' +
+              i +
+              "</text></svg>",
+          )
+        );
+      }
+      document.querySelectorAll('img[src*="jsdelivr"]').forEach((img) => {
+        img.onerror = function () {
+          this.onerror = null;
+          this.src = fb(this.alt);
+        };
+      });
+
+      // spin keyframe
+      const st = document.createElement("style");
+      st.textContent =
+        "@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}";
+      document.head.appendChild(st);
+    </script>
+  </body>
+</html>
